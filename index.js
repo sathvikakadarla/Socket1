@@ -12,7 +12,8 @@ const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
     origin: ["https://frontend-31u7.onrender.com","https://customer-desk-frontend.onrender.com"],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+     credentials: true
   }
 });
 
