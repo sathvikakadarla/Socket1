@@ -4,14 +4,14 @@ import express from "express";
 import http from "http";
 import { Server } from "socket.io";
 import cors from "cors";
-import { connectDB } from "./config/db.js";
-import ticketRouter from "./routes/ticketRoute.js";
+import  connectDB  from "./backend/config/db.js";
+import ticketRouter from "./backend/routes/ticketRoute.js"
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: "*",
+    origin: ["https://frontend-31u7.onrender.com","https://customer-desk-frontend.onrender.com"],
     methods: ["GET", "POST"]
   }
 });
@@ -25,6 +25,10 @@ connectDB();
 
 // Routes
 app.use("/api/tickets", ticketRouter);
+// ✅ Base Route
+app.get("/", (req, res) => {
+  res.send("✅ API Working");
+});
 
 // Socket.IO logic
 io.on("connection", (socket) => {
