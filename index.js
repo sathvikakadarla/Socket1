@@ -11,7 +11,7 @@ const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: {
-    origin: ["https://frontend-31u7.onrender.com","https://customer-desk-frontend.onrender.com"],
+    origin: "*",
     methods: ["GET", "POST"],
      credentials: true
   }
