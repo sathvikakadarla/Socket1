@@ -34,17 +34,22 @@ app.get("/", (req, res) => {
 // Socket.IO logic
 io.on("connection", (socket) => {
   console.log("New client connected: ", socket.id);
+  
+   socket.on("joinTicket", (ticketId) => {
+    console.log(`User with ID ${socket.id} joined ticket room: ${ticketId}`);
+    socket.join(ticketId); // Join the room for the specific ticket
+  });
 
   // Listen for user messages
   socket.on("userMessage", (data) => {
     console.log("User Message: ", data);
-    io.emit("newUserMessage", data); // Broadcast to all clients
+     io.to(data.ticketId).emit("newUserMessage", data); // Send message to the specific ticket room
   });
 
   // Listen for agent messages
   socket.on("agentMessage", (data) => {
     console.log("Agent Message: ", data);
-    io.emit("newAgentMessage", data); // Broadcast to all clients
+    io.to(data.ticketId).emit("newAgentMessage", data); // Send message to the specific ticket room
   });
 
   socket.on("disconnect", () => {
