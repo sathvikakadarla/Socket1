@@ -39,17 +39,17 @@ io.on("connection", (socket) => {
     console.log(`User with ID ${socket.id} joined ticket room: ${ticketId}`);
     socket.join(ticketId); // Join the room for the specific ticket
   });
-
-  // Listen for user messages
+  
+   // Listen for user messages
   socket.on("userMessage", (data) => {
     console.log("User Message: ", data);
-     io.to(data.ticketId).emit("newUserMessage", data); // Send message to the specific ticket room
+    io.emit("newUserMessage", data); // Broadcast to all clients
   });
 
   // Listen for agent messages
   socket.on("agentMessage", (data) => {
     console.log("Agent Message: ", data);
-    io.to(data.ticketId).emit("newAgentMessage", data); // Send message to the specific ticket room
+    io.emit("newAgentMessage", data); // Broadcast to all clients
   });
 
   socket.on("disconnect", () => {
